@@ -1,0 +1,188 @@
+CREATE TABLE DEPARTMENT (
+    Department_ID INT PRIMARY KEY,
+    Department_Name VARCHAR(255),
+    Department_Head VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE EMPLOYEE (
+    Employee_ID INT PRIMARY KEY,
+    D_O_B DATE,
+    Position VARCHAR(255),
+    Salary DECIMAL(10, 2),
+    Date_of_Joining DATE,
+    Total_Assisted_Sales INT,
+    Gender VARCHAR(10),
+    First_Name VARCHAR(255),
+    Last_Name VARCHAR(255),
+    E_Mail VARCHAR(255),
+    Phone_No VARCHAR(20),
+    Department_ID INT,
+    FOREIGN KEY (Department_ID) REFERENCES DEPARTMENT(Department_ID)
+);
+
+CREATE TABLE DEPENDENTS (
+    Gender VARCHAR(10),
+    D_O_B DATE,
+    First_Name VARCHAR(255),
+    Last_Name VARCHAR(255),
+    Relationship VARCHAR(255),
+    Employee_ID INT,
+    FOREIGN KEY (Employee_ID) REFERENCES EMPLOYEE(Employee_ID)
+);
+
+CREATE TABLE CUSTOMER (
+    Customer_ID INT PRIMARY KEY,
+    First_Name VARCHAR(255),
+    Last_Name VARCHAR(255),
+    D_O_B DATE,
+    Address VARCHAR(255),
+    Total_Amount_Spent DECIMAL(10, 2),
+    Reward_Points INT,
+    EMail_ID VARCHAR(255),
+    Phone_No VARCHAR(20)
+);
+
+CREATE TABLE SUPPLIER (
+    SupplierID INT PRIMARY KEY,
+    First_Name VARCHAR(255),
+    Last_Name VARCHAR(255),
+    EMail_ID VARCHAR(255),
+    Phone_Number VARCHAR(20)
+);
+
+CREATE TABLE PRODUCT (
+    Product_ID INT PRIMARY KEY,
+    Threshold_Quantity INT,
+    Category VARCHAR(255),
+    Expiry_Date DATE,
+    Margin DECIMAL(5, 2),
+    GST_Slab DECIMAL(5, 2),
+    Last_Order_Date DATE,
+    Product_Name VARCHAR(255),
+    Price_Per_Unit DECIMAL(10, 2),
+    Quantity_Available INT,
+    SupplierID INT,
+    FOREIGN KEY (SupplierID) REFERENCES SUPPLIER(SupplierID)
+);
+
+CREATE TABLE ORDERS (
+    Order_ID INT PRIMARY KEY,
+    Quantity_Required INT,
+    Order_Status VARCHAR(255),
+    Total_Order_Value DECIMAL(10, 2),
+    Employee_ID INT,
+    Customer_ID INT,
+    Product_ID INT,
+    FOREIGN KEY (Employee_ID) REFERENCES EMPLOYEE(Employee_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER(Customer_ID),
+    FOREIGN KEY (Product_ID) REFERENCES PRODUCT(Product_ID)
+);
+
+
+INSERT INTO DEPARTMENT (Department_ID, Department_Name, Department_Head) VALUES
+    (1, 'Sales', 'John Doe'),
+    (2, 'Marketing', 'Jane Smith'),
+    (3, 'Finance', 'Michael Johnson'),
+    (4, 'Operations', 'Emily Brown');
+
+
+INSERT INTO EMPLOYEE (Employee_ID, D_O_B, Position, Salary, Date_of_Joining, Total_Assisted_Sales, Gender, First_Name, Last_Name, E_Mail, Phone_No, Department_ID) VALUES
+    (1, '1990-05-15', 'Sales Manager', 70000.00, '2010-03-20', 500, 'Male', 'John', 'Doe', 'john.doe@example.com', '555-1234', 1),
+    (2, '1988-08-25', 'Marketing Specialist', 60000.00, '2012-01-10', 300, 'Female', 'Jane', 'Smith', 'jane.smith@example.com', '555-5678', 2),
+    (3, '1995-02-10', 'Financial Analyst', 65000.00, '2015-06-05', 200, 'Male', 'Michael', 'Johnson', 'michael.johnson@example.com', '555-9876', 3),
+    (4, '1993-11-18', 'Operations Manager', 75000.00, '2013-09-15', 400, 'Female', 'Emily', 'Brown', 'emily.brown@example.com', '555-4321', 4),
+    (5, '1991-04-02', 'Sales Representative', 55000.00, '2011-08-12', 250, 'Male', 'David', 'Williams', 'david.williams@example.com', '555-8765', 1),
+    (6, '1994-07-20', 'Marketing Manager', 72000.00, '2014-02-28', 350, 'Female', 'Sarah', 'Davis', 'sarah.davis@example.com', '555-3456', 2),
+    (7, '1996-09-30', 'Financial Planner', 68000.00, '2016-04-18', 180, 'Male', 'Kevin', 'Miller', 'kevin.miller@example.com', '555-2345', 3),
+    (8, '1990-12-12', 'Operations Analyst', 60000.00, '2012-05-22', 300, 'Female', 'Laura', 'Wilson', 'laura.wilson@example.com', '555-6789', 4);
+
+
+INSERT INTO DEPENDENTS (Gender, D_O_B, First_Name, Last_Name, Relationship, Employee_ID) VALUES
+    ('Male', '2010-01-05', 'Jack', 'Doe', 'Child', 1),
+    ('Female', '2012-03-15', 'Sophia', 'Smith', 'Spouse', 2),
+    ('Male', '2015-07-20', 'Ryan', 'Johnson', 'Child', 3),
+    ('Female', '2013-11-12', 'Olivia', 'Brown', 'Child', 4),
+    ('Male', '2014-09-25', 'Luke', 'Williams', 'Child', 5),
+    ('Female', '2018-02-28', 'Emma', 'Davis', 'Child', 6),
+    ('Male', '2019-06-10', 'Leo', 'Miller', 'Child', 7),
+    ('Female', '2017-04-22', 'Ava', 'Wilson', 'Child', 8);
+
+
+INSERT INTO CUSTOMER (Customer_ID, First_Name, Last_Name, D_O_B, Address, Total_Amount_Spent, Reward_Points, EMail_ID, Phone_No) VALUES
+    (1, 'Michael', 'Jones', '1985-03-10', '123 Main St', 1500.00, 100, 'michael.jones@example.com', '555-1111'),
+    (2, 'Emily', 'Thomas', '1990-06-18', '456 Elm St', 2000.00, 150, 'emily.thomas@example.com', '555-2222'),
+    (3, 'David', 'Clark', '1978-11-25', '789 Oak St', 1800.00, 120, 'david.clark@example.com', '555-3333'),
+    (4, 'Sophia', 'White', '1982-09-12', '101 Pine St', 2200.00, 180, 'sophia.white@example.com', '555-4444'),
+    (5, 'Jack', 'Moore', '1995-02-28', '222 Cedar St', 1200.00, 90, 'jack.moore@example.com', '555-5555'),
+    (6, 'Olivia', 'Allen', '1998-07-14', '333 Maple St', 900.00, 60, 'olivia.allen@example.com', '555-6666'),
+    (7, 'Noah', 'Young', '1989-04-05', '444 Walnut St', 1700.00, 110, 'noah.young@example.com', '555-7777'),
+    (8, 'Emma', 'Scott', '1980-12-30', '555 Birch St', 1900.00, 130, 'emma.scott@example.com', '555-8888'),
+    (9, 'Isabella', 'King', '1993-08-22', '666 Pineapple St', 1400.00, 95, 'isabella.king@example.com', '555-9999'),
+    (10, 'James', 'Adams', '1987-01-15', '777 Orange St', 1600.00, 105, 'james.adams@example.com', '555-1234'),
+    (11, 'Ava', 'Robinson', '1996-05-20', '888 Grape St', 1100.00, 75, 'ava.robinson@example.com', '555-2345'),
+    (12, 'William', 'Stewart', '1975-10-08', '999 Lemon St', 1300.00, 85, 'william.stewart@example.com', '555-3456'),
+    (13, 'Charlotte', 'Parker', '1984-06-28', '111 Strawberry St', 1000.00, 70, 'charlotte.parker@example.com', '555-4567'),
+    (14, 'Mason', 'Evans', '1983-03-17', '222 Blueberry St', 2500.00, 200, 'mason.evans@example.com', '555-5678'),
+    (15, 'Harper', 'Morris', '1994-09-03', '333 Raspberry St', 800.00, 50, 'harper.morris@example.com', '555-6789'),
+    (16, 'Ethan', 'Hill', '1999-12-01', '444 Blackberry St', 1100.00, 75, 'ethan.hill@example.com', '555-7890'),
+    (17, 'Amelia', 'Cole', '1991-04-14', '555 Cranberry St', 1350.00, 90, 'amelia.cole@example.com', '555-8901'),
+    (18, 'Liam', 'Ward', '1986-02-09', '666 Pomegranate St', 1550.00, 100, 'liam.ward@example.com', '555-9012'),
+    (19, 'Ella', 'Bailey', '1997-07-26', '777 Kiwi St', 1250.00, 80, 'ella.bailey@example.com', '555-0123'),
+    (20, 'Logan', 'Cooper', '1988-11-11', '888 Persimmon St', 1450.00, 95, 'logan.cooper@example.com', '555-1234');
+
+
+INSERT INTO SUPPLIER (SupplierID, First_Name, Last_Name, EMail_ID, Phone_Number) VALUES 
+    (1, 'John', 'Smith', 'john.smith@example.com', '555-123-4567'),
+    (2, 'Emily', 'Johnson', 'emily.johnson@example.com', '555-234-5678'),
+    (3, 'Michael', 'Williams', 'michael.williams@example.com', '555-345-6789'),
+    (4, 'Emma', 'Jones', 'emma.jones@example.com', '555-456-7890'),
+    (5, 'James', 'Brown', 'james.brown@example.com', '555-567-8901'),
+    (6, 'Olivia', 'Davis', 'olivia.davis@example.com', '555-678-9012'),
+    (7, 'William', 'Miller', 'william.miller@example.com', '555-789-0123'),
+    (8, 'Sophia', 'Wilson', 'sophia.wilson@example.com', '555-890-1234'),
+    (9, 'Alexander', 'Moore', 'alexander.moore@example.com', '555-901-2345'),
+    (10, 'Isabella', 'Lee', 'isabella.lee@example.com', '555-012-3456');
+
+
+INSERT INTO PRODUCT (Product_ID, Threshold_Quantity, Category, Expiry_Date, Margin, GST_Slab, Last_Order_Date, Product_Name, Price_Per_Unit, Quantity_Available, SupplierID) VALUES
+    (1, 50, 'Electronics', '2025-12-31', 0.15, 0.18, '2024-04-10', 'Smartphone', 599.99, 100, 1),
+    (2, 20, 'Clothing', NULL, 0.20, 0.12, '2024-04-08', 'Men T-Shirt', 29.99, 50, 2),
+    (3, 30, 'Beauty', NULL, 0.25, 0.05, '2024-04-09', 'Perfume', 49.99, 80, 3),
+    (4, 100, 'Home Appliances', '2026-12-31', 0.10, 0.12, '2024-04-10', 'Coffee Maker', 79.99, 60, 4),
+    (5, 40, 'Electronics', NULL, 0.18, 0.18, '2024-04-11', 'Wireless Earbuds', 39.99, 90, 5),
+    (6, 15, 'Books', NULL, 0.30, 0.00, '2024-04-10', 'Fantasy Novel', 14.99, 70, 1),
+    (7, 25, 'Kitchenware', '2025-06-30', 0.12, 0.12, '2024-04-08', 'Non-Stick Pan', 29.99, 40, 2),
+    (8, 50, 'Electronics', NULL, 0.15, 0.18, '2024-04-09', 'Smart Speaker', 99.99, 55, 3),
+    (9, 10, 'Toys', NULL, 0.25, 0.05, '2024-04-10', 'Remote Control Car', 49.99, 30, 4),
+    (10, 30, 'Healthcare', '2024-12-31', 0.20, 0.05, '2024-04-11', 'Vitamin C Tablets', 19.99, 100, 5),
+    (11, 50, 'Clothing', NULL, 0.25, 0.12, '2024-04-08', 'Women Dress', 59.99, 60, 1),
+    (12, 20, 'Electronics', '2025-12-31', 0.18, 0.18, '2024-04-09', 'Bluetooth Headphones', 49.99, 80, 2);
+
+
+INSERT INTO ORDERS (Order_ID, Quantity_Required, Order_Status, Total_Order_Value, Employee_ID, Customer_ID, Product_ID) VALUES
+    (1, 2, 'Pending', 1199.98, 1, 1, 1),
+    (2, 3, 'Processing', 89.97, 2, 2, 2),
+    (3, 1, 'Shipped', 49.99, 3, 3, 3),
+    (4, 4, 'Pending', 319.96, 4, 4, 4),
+    (5, 2, 'Processing', 79.98, 5, 5, 5),
+    (6, 1, 'Shipped', 14.99, 6, 6, 6),
+    (7, 3, 'Pending', 224.97, 7, 7, 7),
+    (8, 2, 'Processing', 199.98, 8, 8, 8),
+    (9, 1, 'Shipped', 29.99, 9, 9, 9),
+    (10, 5, 'Pending', 299.95, 10, 10, 10),
+    (11, 2, 'Processing', 79.98, 1, 1, 11),
+    (12, 1, 'Shipped', 49.99, 2, 2, 12),
+    (13, 3, 'Pending', 149.97, 3, 3, 13),
+    (14, 2, 'Processing', 119.98, 4, 4, 14),
+    (15, 1, 'Shipped', 29.99, 5, 5, 15),
+    (16, 4, 'Pending', 259.96, 6, 6, 16),
+    (17, 2, 'Processing', 399.98, 7, 7, 17),
+    (18, 1, 'Shipped', 49.99, 8, 8, 18),
+    (19, 3, 'Pending', 179.97, 9, 9, 19),
+    (20, 2, 'Processing', 119.98, 10, 10, 20),
+    (21, 1, 'Shipped', 14.99, 1, 1, 6),
+    (22, 2, 'Pending', 99.98, 2, 2, 7),
+    (23, 3, 'Processing', 149.97, 3, 3, 8),
+    (24, 4, 'Shipped', 219.96, 4, 4, 9),
+    (25, 2, 'Pending', 79.98, 5, 5, 10);
+
